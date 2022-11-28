@@ -8,23 +8,20 @@ class Box {
 	int height;
 
 	public Box(int length, int width, int height) {
+		this.test();
 		this.length = length;
-		width = width;
-		height = height;
+		this.width = width;
+		this.height = height;
 	}
 
-	Box() {
-
-	}
-
-	Box(int a) {
-
+   	Box() {
+		this(94, 25, 40);
+       System.out.println("Non parametrised constructor");
 	}
 	
-	Box(double a) {
-
+	public void test() {
+		System.out.println("test function in Box class");
 	}
-
 	
 
 	// non parameterized
@@ -34,11 +31,14 @@ class Box {
 public class ConstructorDemo {
 
 	public static void main(String[] args) {
-		Box box = new Box(150, 200, 350);
+	//	Box box = new Box(150, 200, 350);
+		Box box = new Box();
 
 		System.out.println(box.length);
 		System.out.println(box.width);
 		System.out.println(box.height);
+		
+		
 		
 		
 	}

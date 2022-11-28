@@ -1,6 +1,9 @@
 package classesandObjects;
 
 public class TestAccess {
+	TestAccess(){
+		
+	}
 	
 	public static void main(String[] args) {
 		 AccessModifiers access1 = new AccessModifiers();
@@ -12,6 +15,10 @@ public class TestAccess {
 		 AccessModifiers.test5();
 		 
 		 String str = new String();
+	}
+	
+	void test() {
+		
 	}
 
 }
