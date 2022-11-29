@@ -1,6 +1,6 @@
 package inheritanceDemo;
 
-public class JrDevloper extends Employee {
+public class JrDevloper extends Developer {
 	
 	@Override
 	public void workingHrs() {

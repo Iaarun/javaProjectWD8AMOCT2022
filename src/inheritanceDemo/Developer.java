@@ -1,5 +1,10 @@
 package inheritanceDemo;
 
+/*
+ sub derived child
+ super base parent
+ */
+
 public class Developer extends Employee{
    
 	
