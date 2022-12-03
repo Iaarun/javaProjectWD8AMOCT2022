@@ -1,7 +1,7 @@
 package polymorphismdemo;
 
 public class Calculator {
-
+    int a=10;
 	public static void add(int b, int a) {
 		System.out.println("addintion of two number");
 	}
@@ -21,7 +21,7 @@ public class Calculator {
 		System.out.println("Addition of int and decimal number");
 	}
 	
-	 void test(int a) {
+	public  void test() {
 		System.out.println("Test function in Calculator class");
 	}
 
