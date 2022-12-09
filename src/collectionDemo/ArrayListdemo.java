@@ -1,6 +1,9 @@
 package collectionDemo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /*
   Generics
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 public class ArrayListdemo {
 	public static void main(String[] args) {
 		ArrayListdemo ad = new ArrayListdemo();
-		ad.createArrayList();
+		ad.iterateoverlist();
 	}
 
 	public void wrapperdemo() {
@@ -53,15 +56,93 @@ public class ArrayListdemo {
 		li.addAll(0, li1);
 		System.out.println(li);
 
-		System.out.println(li.subList(0, 3));
-
-		System.out.println(li.subList(0, li.size()));
-
-		System.out.println(li.hashCode());
+//		System.out.println(li.subList(0, 3));
+//
+//		System.out.println(li.subList(0, li.size()));
+//
+//		System.out.println(li.hashCode());
 
 		// li.containsAll(li1)
 
 		Object[] arr = li.toArray();
 
+		Collections.sort(li);
+		System.out.println(li);
+		Collections.sort(li, Collections.reverseOrder());
+		System.out.println(li);
+
 	}
+
+	public void iterateoverlist() {
+
+		ArrayList<String> names = new ArrayList<>();
+		names.add("Java");
+		names.add("Python");
+		names.add("C#");
+		names.add("Javascript");
+		names.add("Ruby");
+		names.add("cobol");
+		names.add("Ruby");
+		names.add("cobol");
+
+		System.out.println("==== using for loop ===");
+		for (int i = 0; i <= names.size() - 1; i++) {
+			System.out.print(names.get(i) + " ");
+		}
+
+		System.out.println();
+		System.out.println("==== using while loop ===");
+		int i = 0;
+		while (i <= names.size() - 1) {
+			System.out.print(names.get(i) + " ");
+			i++;
+		}
+		System.out.println();
+		System.out.println("==== using enhance for loop ===");
+
+		for (String x : names) {
+			System.out.print(x + " ");
+		}
+
+		System.out.println();
+		System.out.println("==== using for each with lamda operator ===");
+
+		names.forEach(x -> {
+			System.out.print(x + " ");
+		});
+
+		System.out.println();
+		System.out.println("==== using stream api ===");
+		names.stream().forEach(x -> {
+			System.out.print(x + " ");
+		});
+       
+		System.out.println();
+		System.out.println("==== using iterator ===");
+
+		Iterator<String> it = names.iterator();
+		while(it.hasNext()) {
+			System.out.print(it.next()+" ");
+		}
+		
+		System.out.println();
+		System.out.println("==== using list iterator ===");
+		
+		ListIterator<String> lit = names.listIterator(2);
+		while(lit.hasPrevious()) {
+			System.out.print(lit.previous()+" ");
+		}
+		System.out.println();
+        ArrayList<String> tdata = new ArrayList<>();
+        
+        for(int j=0; j<=names.size()-1; j++) {
+        	if(!tdata.contains(names.get(j))) {
+        		tdata.add(names.get(j));
+        	}
+        }
+        System.out.println(tdata);
+        
+        names.stream().distinct().forEach(x->{System.out.print(x+" ");});
+	}
+
 }
