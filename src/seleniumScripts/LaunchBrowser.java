@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * 
+ * Launching browser before selenium version  4.6.0
   webdriver.chrome.driver
   webdriver.gecko.driver
   webdriver.ie.driver
