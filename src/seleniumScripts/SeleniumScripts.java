@@ -3,6 +3,9 @@ package seleniumScripts;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.ws.Response;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,18 +20,46 @@ public class SeleniumScripts {
 
 	public static void main(String[] args) {
 		SeleniumScripts ss = new SeleniumScripts();
-		ss.launchBrowsers("firefox");
-		ss.handleMultipleCheckbox();
+		ss.launchBrowsers("chrome");
+		ss.promptalert();
 		// ss.closeBrowser();
+	}
+	
+	public void promptalert() {
+		driver.get("http://www.tizag.com/javascriptT/javascriptprompt.php");
+		driver.findElement(By.xpath("//input[@value='Say my name!']")).click();
+		 Alert alert=  driver.switchTo().alert();
+		 
+		 System.out.println(alert.getText());
+		 alert.sendKeys("Arun");
+		 alert.accept();
+		 System.out.println(alert.getText());
+		 alert.dismiss();
+	}
+
+	public void clickOnbutton() {
+		driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+		WebElement submitBtn = driver.findElement(By.xpath("//button[normalize-space()='Submit']"));
+
+		submitBtn.click();
+	}
+
+	public void displayedenabledselected() {
+		driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+		WebElement readonly = driver.findElement(By.name("my-readonly"));
+		System.out.println(readonly.isDisplayed());
+
+		WebElement disabled = driver.findElement(By.name("my-disabled"));
+		System.out.println(disabled.isEnabled());
 	}
 
 	public void handleMultipleCheckbox() {
 		driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
 
 		List<WebElement> checkboxes = driver.findElements(By.name("my-check"));
-		
-		checkboxes.forEach(x->{
-			if(!x.isSelected()) {
+
+		checkboxes.forEach(x -> {
+			if (!x.isSelected()) {
 				x.click();
 			}
 		});
