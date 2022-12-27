@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Selenium4.6.0
@@ -20,11 +21,35 @@ import org.openqa.selenium.interactions.Actions;
 public class SeleniumScripts {
 	WebDriver driver;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		SeleniumScripts ss = new SeleniumScripts();
 		ss.launchBrowsers("chrome");
-		ss.slider();
+		ss.handleDropDown();
 		// ss.closeBrowser();
+	}
+
+	public void handleDropDown() throws InterruptedException {
+		driver.get("https://www.facebook.com/");
+		WebElement createbutton = driver.findElement(By.xpath("//a[contains(@id,'u_0_0_')]"));
+		createbutton.click();
+
+		WebElement month = driver.findElement(By.id("month"));
+		Select select = new Select(month);
+
+		System.out.println("Default value: " + select.getFirstSelectedOption().getText());
+         System.out.println("=================");
+		List<WebElement> options = select.getOptions();
+		options.forEach(x->{
+			System.out.println(x.getText());
+		});
+		
+		select.selectByIndex(10);
+		Thread.sleep(1000);
+		select.selectByVisibleText("Feb");
+		Thread.sleep(1000);
+		select.selectByValue("6");
+		System.out.println(select.isMultiple());
+
 	}
 
 	public void slider() {
