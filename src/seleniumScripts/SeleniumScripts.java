@@ -1,5 +1,7 @@
 package seleniumScripts;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -8,11 +10,15 @@ import javax.xml.ws.Response;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -21,11 +27,47 @@ import org.openqa.selenium.support.ui.Select;
 public class SeleniumScripts {
 	WebDriver driver;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		SeleniumScripts ss = new SeleniumScripts();
 		ss.launchBrowsers("chrome");
-		ss.handleDropDown();
-		// ss.closeBrowser();
+		ss.fileUpload();
+	//	ss.closeBrowser();
+	}
+
+	public void fileUpload() {
+		driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+		WebElement fileupload = driver.findElement(By.xpath("//input[@name='my-file']"));
+		fileupload.sendKeys("C:\\Users\\HP\\Downloads\\Unconfirmed 801381.crdownload");
+	}
+
+	public void capturescreenshot() throws IOException {
+		driver.get("https://bonigarcia.dev/selenium-webdriver-java/dropdown-menu.html");
+		driver.findElement(By.xpath("//button[@id='my-dropdown-1']")).click();
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File file = ts.getScreenshotAs(OutputType.FILE);
+
+		FileHandler.copy(file, new File("D:\\javaprog\\JavaProjectWD8AMOCT\\screenshot\\dd.psning"));
+		WebElement menu = driver.findElement(By.xpath("//ul[@class='dropdown-menu show']"));
+		file = menu.getScreenshotAs(OutputType.FILE);
+		FileHandler.copy(file, new File("D:\\javaprog\\JavaProjectWD8AMOCT\\screenshot\\menu.gif"));
+		System.out.println("Screenshot captured");
+
+	}
+
+	public void handlescroll() {
+		driver.get("http://www.tizag.com/javascriptT/javascriptalert.php");
+
+		WebElement alertbtn = driver.findElement(By.xpath("//input[@value='Confirmation Alert']"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		// random scroll
+		// js.executeScript("window.scrollBy(0,500)");
+
+		// scroll to bring element into view
+		// js.executeScript("arguments[0].scrollIntoView();", alertbtn);
+
+		// scroll till bottom of the page
+		js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
 	}
 
 	public void handleDropDown() throws InterruptedException {
@@ -37,12 +79,12 @@ public class SeleniumScripts {
 		Select select = new Select(month);
 
 		System.out.println("Default value: " + select.getFirstSelectedOption().getText());
-         System.out.println("=================");
+		System.out.println("=================");
 		List<WebElement> options = select.getOptions();
-		options.forEach(x->{
+		options.forEach(x -> {
 			System.out.println(x.getText());
 		});
-		
+
 		select.selectByIndex(10);
 		Thread.sleep(1000);
 		select.selectByVisibleText("Feb");
