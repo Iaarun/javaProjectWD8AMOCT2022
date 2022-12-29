@@ -3,14 +3,15 @@ package seleniumScripts;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.ws.Response;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -30,8 +31,77 @@ public class SeleniumScripts {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		SeleniumScripts ss = new SeleniumScripts();
 		ss.launchBrowsers("chrome");
-		ss.fileUpload();
-	//	ss.closeBrowser();
+		ss.handliMultipleWindow();
+		// ss.closeBrowser();
+	}
+	
+	public void multipletabs() {
+		LinkedHashSet<String> lset = new LinkedHashSet<>();
+		driver.get("https://www.naukri.com/");
+		String firsttab = driver.getWindowHandle();
+		lset.add(firsttab);
+		WebElement servicestab = driver.findElement(By.xpath("//div[normalize-space()='Services']"));
+
+		WebElement companiesTab = driver.findElement(By.xpath("//div[normalize-space()='Companies']"));
+		
+		Actions action = new Actions(driver);
+
+		action.keyDown(Keys.CONTROL).click(servicestab).keyUp(Keys.CONTROL).build().perform();
+		lset.addAll(driver.getWindowHandles());
+		action.keyDown(Keys.CONTROL).click(companiesTab).keyUp(Keys.CONTROL).build().perform();
+		lset.addAll(driver.getWindowHandles());
+		// Set<String> allids = driver.getWindowHandles();
+
+		Iterator<String> it = lset.iterator();
+		String fid = it.next();
+		System.out.println(fid + "\n" + driver.getTitle());
+
+		String sid = it.next();
+		driver.switchTo().window(sid);
+		System.out.println(sid + "\n" + driver.getTitle());
+
+		String tid = it.next();
+		driver.switchTo().window(tid);
+		System.out.println(tid + "\n" + driver.getTitle());
+	}
+
+
+	public void handliMultipleWindow() {
+		driver.get("https://www.naukri.com/");
+		String firsttab = driver.getWindowHandle();
+		System.out.println(driver.getCurrentUrl());
+		WebElement services = driver.findElement(By.xpath("//div[normalize-space()='Services']"));
+         
+		services.click();
+
+		Set<String> alltabs = driver.getWindowHandles();
+		
+		for(String id: alltabs) {
+			if(!id.equals(firsttab)) {
+				driver.switchTo().window(id);
+				System.out.println(driver.getCurrentUrl());
+				driver.close();
+			}
+		}
+		
+		driver.switchTo().window(firsttab);
+		System.out.println(driver.getCurrentUrl());
+		
+	}
+
+	public void autosuggestion() {
+		driver.get("https://jqueryui.com/autocomplete/");
+		driver.switchTo().frame(0);
+		WebElement Tags = driver.findElement(By.id("tags"));
+		Tags.sendKeys("P");
+		List<WebElement> list = driver.findElements(By.xpath("//ul[@id='ui-id-1']/li"));
+
+		list.forEach(x -> {
+			if (x.getText().equals("Perl")) {
+				x.click();
+			}
+		});
+
 	}
 
 	public void fileUpload() {
