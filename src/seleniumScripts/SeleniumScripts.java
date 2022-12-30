@@ -34,6 +34,27 @@ public class SeleniumScripts {
 		ss.handliMultipleWindow();
 		// ss.closeBrowser();
 	}
+	public void login(){
+		 WebDriver driver = new ChromeDriver();
+
+		driver.get("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
+		driver.manage().window().maximize();
+		 WebElement login= driver.findElement(By.id("login"));
+		 login.sendKeys("testuser");
+
+		WebElement pass= driver.findElement(By.id("password"));
+		 pass.sendKeys("testuser");
+
+		WebElement submitBtn= driver.findElement(By.id("submit"));
+		submitBtn.click();
+
+		WebElement errormessage= driver.findElement(By.id("textmsg"));
+
+		System.out.println(errormessage.getText());
+
+
+		}
+
 	
 	public void multipletabs() {
 		LinkedHashSet<String> lset = new LinkedHashSet<>();
@@ -41,7 +62,6 @@ public class SeleniumScripts {
 		String firsttab = driver.getWindowHandle();
 		lset.add(firsttab);
 		WebElement servicestab = driver.findElement(By.xpath("//div[normalize-space()='Services']"));
-
 		WebElement companiesTab = driver.findElement(By.xpath("//div[normalize-space()='Companies']"));
 		
 		Actions action = new Actions(driver);
@@ -298,7 +318,7 @@ public class SeleniumScripts {
 	public void launchBrowsers(String browserName) {
 
 		if (browserName.equalsIgnoreCase("chrome")) {
-			driver = new ChromeDriver();
+			 driver = new ChromeDriver();
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
 		}
