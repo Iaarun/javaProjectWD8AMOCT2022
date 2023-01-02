@@ -31,31 +31,54 @@ public class SeleniumScripts {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		SeleniumScripts ss = new SeleniumScripts();
 		ss.launchBrowsers("chrome");
-		ss.handliMultipleWindow();
+		ss.handleCalender();
 		// ss.closeBrowser();
 	}
-	public void login(){
-		 WebDriver driver = new ChromeDriver();
+
+	public void handleCalender() {
+		driver.get("https://jqueryui.com/datepicker/");
+		driver.switchTo().frame(0);
+		WebElement inputbox = driver.findElement(By.id("datepicker"));
+		inputbox.click();
+
+		String calTitle = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
+		System.out.println(calTitle);
+		String month= calTitle.split(" ")[0].trim();
+		String year= calTitle.split(" ")[1].trim();
+		  
+		 String nyear=  String.valueOf(Integer.parseInt(year)+1);
+		 
+		 while(!(month.equals("March")&& year.equals(nyear))) {
+			 driver.findElement(By.xpath("//span[@class='ui-icon ui-icon-circle-triangle-e']")).click();
+			 calTitle = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
+			 month= calTitle.split(" ")[0].trim();
+			 year= calTitle.split(" ")[1].trim();
+		 }
+		 
+		 driver.findElement(By.xpath("//a[normalize-space()='30']")).click();
+
+	}
+
+	public void login() {
+		// WebDriver driver = new ChromeDriver();
 
 		driver.get("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
 		driver.manage().window().maximize();
-		 WebElement login= driver.findElement(By.id("login"));
-		 login.sendKeys("testuser");
+		WebElement login = driver.findElement(By.id("login"));
+		login.sendKeys("testuser");
 
-		WebElement pass= driver.findElement(By.id("password"));
-		 pass.sendKeys("testuser");
+		WebElement pass = driver.findElement(By.id("password"));
+		pass.sendKeys("testuser");
 
-		WebElement submitBtn= driver.findElement(By.id("submit"));
+		WebElement submitBtn = driver.findElement(By.id("submit"));
 		submitBtn.click();
 
-		WebElement errormessage= driver.findElement(By.id("textmsg"));
+		WebElement errormessage = driver.findElement(By.id("textmsg"));
 
 		System.out.println(errormessage.getText());
 
+	}
 
-		}
-
-	
 	public void multipletabs() {
 		LinkedHashSet<String> lset = new LinkedHashSet<>();
 		driver.get("https://www.naukri.com/");
@@ -63,7 +86,7 @@ public class SeleniumScripts {
 		lset.add(firsttab);
 		WebElement servicestab = driver.findElement(By.xpath("//div[normalize-space()='Services']"));
 		WebElement companiesTab = driver.findElement(By.xpath("//div[normalize-space()='Companies']"));
-		
+
 		Actions action = new Actions(driver);
 
 		action.keyDown(Keys.CONTROL).click(servicestab).keyUp(Keys.CONTROL).build().perform();
@@ -85,28 +108,27 @@ public class SeleniumScripts {
 		System.out.println(tid + "\n" + driver.getTitle());
 	}
 
-
 	public void handliMultipleWindow() {
 		driver.get("https://www.naukri.com/");
 		String firsttab = driver.getWindowHandle();
 		System.out.println(driver.getCurrentUrl());
 		WebElement services = driver.findElement(By.xpath("//div[normalize-space()='Services']"));
-         
+
 		services.click();
 
 		Set<String> alltabs = driver.getWindowHandles();
-		
-		for(String id: alltabs) {
-			if(!id.equals(firsttab)) {
+
+		for (String id : alltabs) {
+			if (!id.equals(firsttab)) {
 				driver.switchTo().window(id);
 				System.out.println(driver.getCurrentUrl());
 				driver.close();
 			}
 		}
-		
+
 		driver.switchTo().window(firsttab);
 		System.out.println(driver.getCurrentUrl());
-		
+
 	}
 
 	public void autosuggestion() {
@@ -318,7 +340,7 @@ public class SeleniumScripts {
 	public void launchBrowsers(String browserName) {
 
 		if (browserName.equalsIgnoreCase("chrome")) {
-			 driver = new ChromeDriver();
+			driver = new ChromeDriver();
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
 		}
