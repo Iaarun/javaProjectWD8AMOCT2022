@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.openqa.selenium.Alert;
@@ -22,6 +23,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.Select;
 
+import filehandling.PropertiesFileHandle;
+
 /**
  * Selenium4.6.0
  */
@@ -29,10 +32,12 @@ public class SeleniumScripts {
 	WebDriver driver;
 
 	public static void main(String[] args) throws InterruptedException, IOException {
+		PropertiesFileHandle pfh = new PropertiesFileHandle();
+		Properties p1= pfh.readConfig();
 		SeleniumScripts ss = new SeleniumScripts();
-		ss.launchBrowsers("chrome");
+		ss.launchBrowsers((String) p1.get("browser"));
 		ss.handleTable();
-		// ss.closeBrowser();
+		ss.closeBrowser();
 	}
 	public void test(String name, int age) {
 		System.out.println("My name is "+name+ "and age is ");
