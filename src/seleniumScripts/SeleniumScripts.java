@@ -31,8 +31,47 @@ public class SeleniumScripts {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		SeleniumScripts ss = new SeleniumScripts();
 		ss.launchBrowsers("chrome");
-		ss.handleCalender();
+		ss.handleTable();
 		// ss.closeBrowser();
+	}
+	public void test(String name, int age) {
+		System.out.println("My name is "+name+ "and age is ");
+	}
+
+	public void handleTable() {
+		driver.get("https://www.moneycontrol.com/markets/indian-indices/");
+		List<WebElement> columns = driver.findElements(By.xpath("//table[@id='indicesTable']/thead/tr[1]/th"));
+		int colNo = columns.size();
+
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@id='indicesTable']/tbody/tr"));
+		int rownum = rows.size();
+		
+		//get the header names
+		for(int i=1; i<=colNo; i++) {
+		String names=	driver.findElement(By.xpath("//table[@id='indicesTable']/thead/tr[1]/th["+i+"]")).getText();
+		System.out.print(names+" ");
+		}
+
+		System.out.println("=====");
+		//get columndata
+		
+		for(int i=1; i<=rownum; i++) {
+			String names=	driver.findElement(By.xpath("//table[@id='indicesTable']/tbody/tr["+i+"]/td[1]")).getText();
+			String ltp=	driver.findElement(By.xpath("//table[@id='indicesTable']/tbody/tr["+i+"]/td[2]")).getText();
+			System.out.println(names+" | "+ltp);
+			}
+		
+		System.out.println("=====");
+		System.out.println("complete table Data");
+		System.out.println("=====");
+		
+		for(int i=1; i<=rownum; i++) {
+			for(int j=1; j<=colNo; j++) {
+				String data =	driver.findElement(By.xpath("//table[@id='indicesTable']/tbody/tr["+i+"]/td["+j+"]")).getText();
+			    System.out.print(data+"  ");
+			}
+			System.out.println();
+		}
 	}
 
 	public void handleCalender() {
@@ -43,19 +82,19 @@ public class SeleniumScripts {
 
 		String calTitle = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
 		System.out.println(calTitle);
-		String month= calTitle.split(" ")[0].trim();
-		String year= calTitle.split(" ")[1].trim();
-		  
-		 String nyear=  String.valueOf(Integer.parseInt(year)+1);
-		 
-		 while(!(month.equals("March")&& year.equals(nyear))) {
-			 driver.findElement(By.xpath("//span[@class='ui-icon ui-icon-circle-triangle-e']")).click();
-			 calTitle = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
-			 month= calTitle.split(" ")[0].trim();
-			 year= calTitle.split(" ")[1].trim();
-		 }
-		 
-		 driver.findElement(By.xpath("//a[normalize-space()='30']")).click();
+		String month = calTitle.split(" ")[0].trim();
+		String year = calTitle.split(" ")[1].trim();
+
+		String nyear = String.valueOf(Integer.parseInt(year) + 1);
+
+		while (!(month.equals("March") && year.equals(nyear))) {
+			driver.findElement(By.xpath("//span[@class='ui-icon ui-icon-circle-triangle-e']")).click();
+			calTitle = driver.findElement(By.cssSelector(".ui-datepicker-title")).getText();
+			month = calTitle.split(" ")[0].trim();
+			year = calTitle.split(" ")[1].trim();
+		}
+
+		driver.findElement(By.xpath("//a[normalize-space()='30']")).click();
 
 	}
 
