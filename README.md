@@ -9,6 +9,7 @@ https://www.softwaretestingo.com/software-testing-interview-questions/
 Manual testing:
 
 Assignment -1 (2 Jan-2023)
+Read username and password from properties file
 
 "1. Go to ""https://live.guru99.com/""
 2.Verify Title of the page
