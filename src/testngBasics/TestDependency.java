@@ -1,10 +1,15 @@
 package testngBasics;
 
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.Test;
 
 public class TestDependency {
 	
-	@Test(dependsOnMethods = "testException")
+	@Test(dependsOnMethods = "testException", alwaysRun = true)
 	public void test1() {
 		System.out.println("Test1");
 	}
@@ -21,5 +26,8 @@ public class TestDependency {
 		System.out.println("expected exception");
 		
 	}
+	
+
+	
 
 }

@@ -200,7 +200,7 @@ public class SeleniumScripts {
 		driver.get("https://bonigarcia.dev/selenium-webdriver-java/dropdown-menu.html");
 		driver.findElement(By.xpath("//button[@id='my-dropdown-1']")).click();
 		TakesScreenshot ts = (TakesScreenshot) driver;
-		File file = ts.getScreenshotAs(OutputType.FILE);
+		File file = ts.getScreenshotAs(OutputType.FILE); 
 
 		FileHandler.copy(file, new File("D:\\javaprog\\JavaProjectWD8AMOCT\\screenshot\\dd.psning"));
 		WebElement menu = driver.findElement(By.xpath("//ul[@class='dropdown-menu show']"));
@@ -390,6 +390,7 @@ public class SeleniumScripts {
 		}
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
 
 	}
 
